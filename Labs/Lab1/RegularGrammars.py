@@ -33,6 +33,63 @@ class Grammar:
         for i in range(5):
             print(f"{i+1}: {string[i]}")
 
+    def toFiniteAutomaton(self):
+        finiteAutomaton = FiniteAutomaton(self.VN, self.VT, self.P)
+        return finiteAutomaton
 
-a = Grammar()
-a.generateStrings()
+class FiniteAutomaton:
+    def __init__(self, VN, VT, P):
+        self.Q = VN
+        self.Sigma = VT
+        self.delta = self.transitions(P)
+        self.q0 = "S"
+        self.F = self.finalStates(P)
+
+
+    def transitions(self, P):
+        transitionSet = {}
+        for non_terminal, productions in P.items():
+            for production in productions:
+                terminal = production[0]
+                if production[1:] in self.Q:
+                    state = production[1:]
+                else:
+                    state = "final"
+
+                transitionSet[(non_terminal, terminal)] = state
+        return transitionSet
+
+
+    def finalStates(self, P):
+        finalSet = []
+        for non_terminal, productions in P.items():
+            for production in productions:
+                if all(char in self.Sigma for char in production):
+                    finalSet.append((non_terminal, production))
+        return finalSet
+
+
+    def stringBelongToLanguage(self, inputString):
+        state = self.q0
+        final = ""
+
+        print(f"\nValidation of string: {inputString}")
+
+        for char in inputString:
+            if (state, char) in self.delta:
+                state = self.delta[(state, char)]
+                final = char
+            else:
+                print(f"No transition from δ({state}, {char})")
+                return False
+
+        if (state, final) in self.F or state == "final":
+            return True
+        else:
+            print(f"Final state wrong")
+            return False
+
+
+if __name__ == '__main__':
+    grammar = Grammar()
+    grammar.generateStrings()
