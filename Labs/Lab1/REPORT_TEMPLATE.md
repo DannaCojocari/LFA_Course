@@ -28,7 +28,7 @@ class Grammar:
         }
 ```
 
-* In order to generate 5 strings, I initialize the string with "S" which is the first non-terminal, then I check if there are non-terminals in the word and I replace it randomly with the production. This loop continues until it reaches a string with only terminals.
+* In order to generate 5 strings from the grammar, I initialize every string with "S" which is the first non-terminal. Then I check if there are non-terminals in the word and I replace them randomly choosing from the production rules. This loop continues until the generated string consists only of terminal symbols.
 
 ```
     def generateStrings(self, non_terminal="S"):
@@ -53,7 +53,7 @@ class Grammar:
             print(f"{i+1}: {string[i]}")
 ```
 
-* For converting a grammar to a finite automaton I pass to the constructor of FA the non-terminal, terminal and production variables.
+* For converting a grammar to a finite automaton I defined a method "toFiniteAutomaton" which returns an instance of the Finite Automaton class.
 
 
 ```
@@ -74,7 +74,7 @@ class Grammar:
 ```
 
 
-* To determine delta I implemented a function called "transitions" which takes as a parameter the productions. For the transition set, the first two values are the non-terminal and terminal, and the last one represents the state. If the state is not present, then the state is marked as final. 
+* To determine delta I implemented a function called "transitions". The function takes every production rule. It extracts the non-terminal and terminal variable, the third one represents the state. If no valid state is found, it assumes that the state is final.
 
 
 ```
@@ -92,7 +92,7 @@ class Grammar:
         return transitionSet
 ```
 
-* To get the final states I implemented a function "finalStates" which determines the production which has no non-terminals. And this represents the final state.
+* To get the final states I implemented a function "finalStates". It verifies every production and sets the production that contains only terminal as final.
 
 
 ```
@@ -130,7 +130,7 @@ class Grammar:
             return False
 ```
 
-* To check the function "stringBelongToLanguage" I implemented a unit test which verifies it.
+* To check the function "stringBelongToLanguage" I implemented a unit test which verifies whether various strings belong to the language.
 
 ```
 class MyTestCase(unittest.TestCase):
