@@ -23,7 +23,6 @@ class Grammar:
                 for char in string[i]:
                     if char in self.VN:
                         final_string += random.choice(self.P[char])
-
                     else:
                         final_string += char
                 print(final_string)
