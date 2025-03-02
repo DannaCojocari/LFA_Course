@@ -1,4 +1,5 @@
 import random
+import re
 
 
 class Grammar:
@@ -35,6 +36,45 @@ class Grammar:
     def toFiniteAutomaton(self):
         finiteAutomaton = FiniteAutomaton(self.VN, self.VT, self.P)
         return finiteAutomaton
+
+
+    def chomskyHierarchy(self):
+        type1 = True
+        type2 = True
+        type3 = True
+
+        for leftSide, rightSide in self.P.items():
+            leftLinear = False
+            rightLinear = False
+
+            if len(leftSide) > 1 or leftSide in self.VT:
+                type2 = False
+                type3 = False
+            elif len(leftSide) > len(rightSide):
+                type1 = False
+
+            for term in rightSide:
+                if re.match(r'^[a-z][A-Z]?$', term):
+                    leftLinear = True
+                elif re.match(r'^[A-Z]?[a-z]$', term):
+                    rightLinear = True
+                else:
+                    type3 = False
+
+                if leftLinear and rightLinear:
+                    type3 = False
+
+        if type3:
+            return 3
+        if type2:
+            return 2
+        if type1:
+            return 1
+        else:
+            return 0
+
+
+
 
 class FiniteAutomaton:
     def __init__(self, VN, VT, P):
