@@ -181,6 +181,9 @@ and the transitions. If there were no transitions, I used the void symbol.
         print(tabulate(table, headers, tablefmt="grid"))
 ```
 
+* Moreover, to visualize better the NFA,  I constructed a table with the states and terminals, showing their respective transitions.
+
+![img.png](img.png)
 
 
 ## Conclusions 
