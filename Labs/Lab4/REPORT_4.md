@@ -25,8 +25,8 @@ def regex(input):
     elements = input.split()
 ```
 
-* If an element contains parentheses, it indicates a group of symbols separated by | (e.g., (A|B|C)). These symbols are 
-extracted and stored into a buffer. It ensures further processing.
+* If an element contains parentheses, it indicates a group of symbols separated by | (e.g., (A|B|C)). These group of 
+symbols are extracted by a buffer and then are added to a list of symbols. This ensures further processing.
 ```
     for element in elements:
         i = 0;
